@@ -517,6 +517,34 @@ print("Log-X Model RMSE:", rmse2)
 #141.005
 model2.summary()
 
+ 
+"""
+#R-squared = 0.808 > 0.80, Model is very strong
+#p = 0 < 0.05 hence acceptable
+#beta-0 = -6955.6501
+#beta-1 = 948.3717
+
+Calories consumed is actually contributing to weight gained.
+
+Higher calories intake even after log transformation leads to 
+higher weight gain.
+
+- Residual Analysis.
+  . Durbin watson value : 2.488
+      - value lies within range of 1.5 to 2.5 which is acceptable 
+      - SO , there is no serious auto-correlation problem
+
+- Normality check
+    . Jarque Bera p - Value : 0.0566 
+    . It is slightly greater than 0.05
+    . Errors are normally distributed.
+    . All assumptions are satisfied
+
+- Conclusion: RMSE is higher than privious one, 
+    and there is slight correlation in errors.
+
+"""
+
 
 
 #--------------------------------------
@@ -530,6 +558,44 @@ print("Log-X Model RMSE:", rmse2)
 #141.005
 model3.summary()
 
+
+"""
+Inference :
+- RMSE value : 141.005
+- R-Squared : 0.878
+- F Statistics : 86.04
+    Summary :
+    . R-squared value is greater than 0.80 , meaning model is best fit 
+      model.
+    . f-Statistics is higher , calories consumed contribting to weight 
+      gain
+
+- Coeficient Interpretation
+    Beta-0 : what is the value of y when x = 0
+    Beta-1 : What is the coeficient of the x, is it contributing to y
+    p values of Beta-0 and Beta-1 should be < 0.05
+    
+    Inference:
+        . As the p-values are lesser than the 0.05 , meaning 
+        both Beta-0 and Beta-1 are really contributing to weight gain
+
+- Residual Analysis
+    
+    Durbin Watson values : 3.13
+    Jarque Bera p-value : 0.0469
+    
+    - DW value is greater than 2.5 , so there is negative Auto-correlation problem 
+
+Summary :
+    - RMSE is still lesser than the previous model.
+    - Although features are contributing to the target variable,
+    - Srious auto correlation problem is there and errors are not normally 
+    distributed
+    so model is  NOT ACCEPTABLE.
+
+"""
+
+
 #--------------------------------------
 # 4. POLYNOMIAL MODEL
 #--------------------------------------     
@@ -541,6 +607,33 @@ print("Polynomial Model RMSE:", rmse4)
 #117.41
 model4. summary()
 
+
+"""
+- R-squared = 0.878 
+     . Values are greater than 0.80 
+         meaning , about 87.8% variation is explained by polynomial
+         model
+- f-statistics : 39.44 , meaning features are statistically significant.
+- probability of f-statistics : 9.61e-06 , lesser than 0.05 
+        so , overall model is acceptable.
+
+- Intercept : 2.8287
+- cal_consumed : 0.0011
+
+- Residual  Analysis
+     DW values : 3.131 , still higher than 2.5
+     meaning , Negative Auto correlation problem is there.
+
+- Normality check
+    . JB p-values : 0.04 --> Lesser than 0.05 meaning , errors are 
+    normally distributed.
+
+SUMMARY:
+    - RMSE is greater than rest of the models.
+    - Although errors are normally distributed and features are 
+        significantly contrbuted to the target variable
+    - Model is not acceptable.
+"""
 
 # model comparision  
 import pandas as pd
@@ -560,6 +653,13 @@ print(results)
 
 best_model_name = results.loc[results['RMSE'].idxmin(), 'Model']
 print("Best Model:", best_model_name)
+
+
+"""
+Inference:
+    - By comapring all RMSE and R-Squared values of the dataset,
+    our best model is SLR(Simple Linear Regression)
+"""
 
 #------------------------------------------------------------------------
 # TRAIN-TEST VALIDATION USING BEST MODEL (SLR IS BEST HERE)
@@ -593,4 +693,5 @@ Inference:
 # Buisness Impact
  . It can be helpful for the peoples who wana gain weight or loose fat.
  . Dietician for their clients to track their gaining.
+
 """
